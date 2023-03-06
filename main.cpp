@@ -2,7 +2,6 @@
 #include <filesystem>
 #include <string>
 #include <vector>
-#include <boost/algorithm/string/join.hpp>
 #include <map>
 #include <ranges>
 
@@ -54,8 +53,11 @@ int main(int argc, char** argv) {
 
     if(argc < 2) {
         auto keys_view = std::views::keys(commands);
-        std::vector<std::string> keys{keys_view.begin(), keys_view.end()};
-        std::cout << "Usage: " << file_path.filename().string() << " <" << boost::algorithm::join(keys, "|") << ">" << std::endl;
+        std::cout << "Usage: " << file_path.filename().string() << " <command>" << std::endl;
+        std::cout << "Commands:" << std::endl;
+        for(auto& command: keys_view) {
+            std::cout << "  " << command << " " << commands[command] << std::endl;
+        }
         return 0;
     }
 
